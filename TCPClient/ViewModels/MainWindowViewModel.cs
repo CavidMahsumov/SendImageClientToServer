@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -17,11 +18,15 @@ namespace TCPClient.ViewModels
 
         public RelayCommand SelectBtnCommand { get; set; }
         public RelayCommand SendBtnCommand { get; set; }
-        public BitmapImage image { get; set; }
+
+
+        byte[] b;
+
+
         public MainWindowViewModel(MainWindow mainWindow)
         {
 
-
+            
 
             SelectBtnCommand = new RelayCommand((sender) =>
             {
@@ -32,45 +37,57 @@ namespace TCPClient.ViewModels
                 open.Filter = "Image file (*.png)|*.png";
 
                 open.ShowDialog();
-                    
 
-            });
+           
+                b = File.ReadAllBytes(open.FileName);
+
+
+
+
+
+
+        });
             SendBtnCommand = new RelayCommand((sender) =>
             {
+                Task.Run(() => {
 
-                var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                var ipAdress = IPAddress.Parse("10.1.18.42");
-                var port = 27001;
+                    var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    var ipAdress = IPAddress.Parse("10.2.27.31");
+                    var port = 27002;
 
-                var ep = new IPEndPoint(ipAdress, port);
+                    var ep = new IPEndPoint(ipAdress, port);
 
-                try
-                {
-                    socket.Connect(ep);
-
-                    if (socket.Connected)
+                    try
                     {
-                        Console.WriteLine("Connected to the Server . . . .");
+                        socket.Connect(ep);
 
+                        if (socket.Connected)
+                        {
+                            Console.WriteLine("Connected to the Server . . . .");
+                            MessageBox.Show("Connected");
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("Can not Connected to the Server");
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        Console.WriteLine("Can not Connected to the Server");
+                        Console.WriteLine("Can Not connect to the Server");
+                        Console.WriteLine(ex.Message);
                     }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Can Not connect to the Server");
-                    Console.WriteLine(ex.Message);
-                }
 
-                while (true)
-                {
-                    var msg = Console.ReadLine();
-                    var bytes = Encoding.UTF8.GetBytes(msg);
-                    socket.Send(bytes);
-                }
+                    while (true)
+                    {
 
+                        socket.Send(b);
+                    }
+
+
+
+                });
+              
             });
 
         }
