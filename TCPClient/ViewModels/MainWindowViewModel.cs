@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using TCPClient.Command;
+using TCPClient.Extentations;
 
 namespace TCPClient.ViewModels
 {
@@ -38,8 +39,8 @@ namespace TCPClient.ViewModels
 
                 open.ShowDialog();
 
-           
-                b = File.ReadAllBytes(open.FileName);
+
+               b=ImageHelper.GetBytesOfImage(open.FileName);
 
 
 
@@ -52,7 +53,7 @@ namespace TCPClient.ViewModels
                 Task.Run(() => {
 
                     var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                    var ipAdress = IPAddress.Parse("10.2.27.31");
+                    var ipAdress = IPAddress.Parse("192.168.1.103");
                     var port = 27002;
 
                     var ep = new IPEndPoint(ipAdress, port);

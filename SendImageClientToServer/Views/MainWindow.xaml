@@ -12,43 +12,16 @@
 
             </Button>
             <TextBlock TextAlignment="Center" FontSize="28" Text="Images"></TextBlock>
-            <ListBox  Name="Listbox" Grid.Column="1"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
-
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel></WrapPanel>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
+            <ListBox  x:Name="myListView" Background="LightGray" Height="200">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="10*"></RowDefinition>
-                                <RowDefinition Height="4*"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Border Grid.Row="0" x:Name="border1" Width="200" Height="250" Background="Transparent" BorderBrush="Red" BorderThickness="5" Margin="5,25,5,5">
-
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="10*"></RowDefinition>
-                                        <RowDefinition Height="3*"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <StackPanel Grid.Row="0" >
-                                        <Image x:Name="Image" Width="150" Height="150" Margin="0,8,0,0"  ></Image>
-                                        <Label Width="200" Height="5" Background="Red" Margin="0,4,0,0"></Label>
-                                    </StackPanel>
-                                   
-                                 
-                                </Grid>
-                            </Border>
-                        </Grid>
-
+                        <StackPanel Orientation="Vertical" Margin="5,5,5,5" Background="White">
+                            <Image  Source="{Binding ImagePath}" Height="100" Width="100" Margin="5,5,5,5" />
+                            
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-
             </ListBox>
-           
-
         </StackPanel>
     </Grid>
 </Window>

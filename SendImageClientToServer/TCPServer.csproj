@@ -98,6 +98,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\TCPClient\TCPClient.csproj">
+      <Project>{8F819ECB-DFCC-4293-9E2E-AC5D18A8CC2E}</Project>
+      <Name>TCPClient</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
