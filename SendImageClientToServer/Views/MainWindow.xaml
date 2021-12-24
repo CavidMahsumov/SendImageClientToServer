@@ -12,11 +12,11 @@
 
             </Button>
             <TextBlock TextAlignment="Center" FontSize="28" Text="Images"></TextBlock>
-            <ListBox  x:Name="myListView" Background="LightGray" Height="200">
+            <ListBox  x:Name="myListView" Background="LightGray" Height="368">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical" Margin="5,5,5,5" Background="White">
-                            <Image  Source="{Binding ImagePath}" Height="100" Width="100" Margin="5,5,5,5" />
+                            <Image  Source="{Binding ImagePath}" Height="200" Width="200" Margin="5,5,5,5" />
                             
                         </StackPanel>
                     </DataTemplate>
