@@ -32,63 +32,64 @@ namespace TCPClient.ViewModels
             SelectBtnCommand = new RelayCommand((sender) =>
             {
 
-                var open = new System.Windows.Forms.OpenFileDialog();
+                try
+                {
+                    var open = new Microsoft.Win32.OpenFileDialog();
 
-                open.Multiselect = false;
-                open.Filter = "Image file (*.png)|*.png";
+                    open.Multiselect = false;
+                    open.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                    open.ShowDialog();
+                    b = ImageHelper.GetBytesOfImage(path:open.FileName);
+                    mainWindow.image1.Source =new BitmapImage(new Uri(open.FileName));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
 
-                open.ShowDialog();
-
-
-               b=ImageHelper.GetBytesOfImage(open.FileName);
+                
 
 
 
 
 
 
-        });
+            });
             SendBtnCommand = new RelayCommand((sender) =>
             {
-                Task.Run(() => {
-
-                    var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                    var ipAdress = IPAddress.Parse("192.168.1.103");
-                    var port = 27002;
-
-                    var ep = new IPEndPoint(ipAdress, port);
-
-                    try
+                var client = new TcpClient();
+                var ip = IPAddress.Parse("192.168.1.103");
+                var port = 27001;
+                var ep = new IPEndPoint(ip, port);
+                try
+                {
+                    client.Connect(ep);
+                    if (client.Connected)
                     {
-                        socket.Connect(ep);
-
-                        if (socket.Connected)
+                        var writer = Task.Run(() =>
                         {
-                            Console.WriteLine("Connected to the Server . . . .");
-                            MessageBox.Show("Connected");
+                            while (true)
+                            {
 
-                        }
-                        else
-                        {
-                            Console.WriteLine("Can not Connected to the Server");
-                        }
+                                var stream = client.GetStream();
+                                var bw = new BinaryWriter(stream);
+                                bw.Write(b);
+                            };
+                        });
+
+
+
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        Console.WriteLine("Can Not connect to the Server");
-                        Console.WriteLine(ex.Message);
+                        MessageBox.Show("CLinet doesnt connected");
                     }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
 
-                    while (true)
-                    {
-
-                        socket.Send(b);
-                    }
-
-
-
-                });
-              
             });
 
         }

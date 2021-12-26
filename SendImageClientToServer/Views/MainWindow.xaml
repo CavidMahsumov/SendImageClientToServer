@@ -6,22 +6,21 @@
         xmlns:local="clr-namespace:SendImageClientToServer"
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="800">
-    <Grid Background='Cyan'>
-        <StackPanel >
-            <Button Height="100" Command="{Binding a}">
+    <Grid Background='Snow'>
+        <StackPanel Background="BurlyWood" >
 
-            </Button>
             <TextBlock TextAlignment="Center" FontSize="28" Text="Images"></TextBlock>
-            <ListBox  x:Name="myListView" Background="LightGray" Height="368">
+            <ListBox  x:Name="myListView" Background="LightGray" Height="300" Margin="50,0,50,0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical" Margin="5,5,5,5" Background="White">
                             <Image  Source="{Binding ImagePath}" Height="200" Width="200" Margin="5,5,5,5" />
-                            
+
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <Button Content="Connect" FontSize="25"   Width="300" Height="60" Command="{Binding a}" Margin="0,50,0,0"/>
         </StackPanel>
     </Grid>
 </Window>
